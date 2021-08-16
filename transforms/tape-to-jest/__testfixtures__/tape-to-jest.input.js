@@ -21,3 +21,9 @@ test('does a thing', function (t) {
 
   t.end();
 });
+
+test('does another thing', function (spec) {
+  spec.equals(something, expected, 'Some failure message');
+
+  spec.end();
+});

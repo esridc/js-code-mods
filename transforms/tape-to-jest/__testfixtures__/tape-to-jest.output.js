@@ -17,3 +17,7 @@ it('does a thing', function() {
 
   expect(something).toBeFalsy();
 });
+
+it('does another thing', function() {
+  expect(something).toBe(expected);
+});

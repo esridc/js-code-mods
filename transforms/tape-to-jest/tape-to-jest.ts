@@ -17,18 +17,6 @@ const transform: Transform = (fileInfo, api) => {
     },
   });
 
-  testExprs.forEach((path) => {
-    (path.value.callee as Identifier).name = "it";
-    (path.value.arguments[1] as FunctionExpression).params = []; // no longer passing in "assert"
-  });
-
-  const asserts = root.find(j.CallExpression, {
-    callee: {
-      type: "MemberExpression",
-      object: { type: "Identifier", name: "t" },
-    },
-  });
-
   const createExpectStatement = (args: (ExpressionKind | SpreadElement)[]) =>
     j.callExpression(j.identifier("expect"), args);
 
@@ -53,14 +41,29 @@ const transform: Transform = (fileInfo, api) => {
     return j.callExpression(fullMemberExpr, expectationArgs);
   };
 
-  asserts.forEach((assertExpr) => {
-    const args = assertExpr.value.arguments;
-    const info = getExpectationInfo(assertExpr);
-    if (info === null) {
-      assertExpr.prune();
-      return;
-    }
-    assertExpr.replace(createExpectCall([args[0]], info.name, info.args, info.negated));
+  testExprs.forEach((path) => {
+    (path.value.callee as Identifier).name = "it"; // change "test" to "it"
+
+    const assertObjectName = ((path.value.arguments[1] as FunctionExpression).params[0] as Identifier).name;
+
+    (path.value.arguments[1] as FunctionExpression).params = []; // no longer pass in assertion object
+
+    const asserts = j(path).find(j.CallExpression, {
+      callee: {
+        type: "MemberExpression",
+        object: { type: "Identifier", name: assertObjectName },
+      },
+    });
+
+    asserts.forEach((assertExpr) => {
+      const args = assertExpr.value.arguments;
+      const info = getExpectationInfo(assertExpr);
+      if (info === null) {
+        assertExpr.prune();
+        return;
+      }
+      assertExpr.replace(createExpectCall([args[0]], info.name, info.args, info.negated));
+    });
   });
 
   return root.toSource();
