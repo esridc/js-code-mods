@@ -11,8 +11,8 @@
     "url": "git+https://github.com/esridc/js-code-mods.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Andrew Tate <atate@esri.com>",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/esridc/js-code-mods/issues"
   },
