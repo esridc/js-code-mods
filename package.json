@@ -1,0 +1,29 @@
+{
+  "name": "js-code-mods",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/esridc/js-code-mods.git"
+  },
+  "keywords": [],
+  "author": "Andrew Tate <atate@esri.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/esridc/js-code-mods/issues"
+  },
+  "homepage": "https://github.com/esridc/js-code-mods#readme",
+  "devDependencies": {
+    "@types/jest": "^27.0.1",
+    "@types/jscodeshift": "^0.11.2",
+    "babel-jest": "^27.0.6",
+    "jest": "^27.0.6",
+    "jscodeshift": "^0.13.0",
+    "ts-jest": "^27.0.4",
+    "typescript": "^4.3.5"
+  }
+}
